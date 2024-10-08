@@ -198,6 +198,74 @@ of total medals.
 
 
 
+## Phase 04
+#### Consider only the Random Forest model.
+Use Random Forest with cross-validation and hyperparameter tuning, along with the specified
+special condition
+
+#### Perform cross-validation
+cv = KFold(n_splits=5, shuffle=True, random_state=42) 
+
+#### Initialize the Random Forest model with the best parameters
+model = RandomForestRegressor(
+n_estimators=500,
+max_depth=20,
+max_features='sqrt',
+min_samples_split=2,
+min_samples_leaf=1,
+random_state=42
+)
+
+
+### Special Conditions : 
+* 01). Predicted medals must be integers.
+* 02). No negative values; minimum is 0.
+* 03). Predicted medals must equal actual total medals.
+
+
+### Results
+| Model Name                              | Test Set Multiple R | Test Set R-squared (R²) | Test Set Std. Error | Training Set MSE    |
+|------------------------------------------|---------------------|-------------------------|---------------------|---------------------|
+| Without Condition                        | 0.943308509         | 0.889830944             | 6.354889093         | 5.001277383         |
+| With Condition                           | 0.945356072         | 0.893698103             | 6.242357965         | 5.349440748         |
+| With Condition + Y Normalized            | 0.947478312         | 0.897715151             | 6.123275716         | 0.015145438         |
+| Condition + Hyper para                   | 0.954382263         | 0.910845504             | 5.716757707         | 5.327314522         |
+| Condition + Hyper para + Y Normalized    | 0.95142506          | 0.905209645             | 5.894680038         | 0.015374254         |
+| Condition + Cross Validation             | 0.945356072         | 0.893698103             | 6.242357965         | 5.349440748         |
+| Condition + Cross Validation + Y Normalized | 0.947478312      | 0.897715151             | 6.123275716         | 0.111340807         |
+| All combined                             | 0.954382263         | 0.910845504             | 5.716757707         | 5.327314522         |
+| All combined + Y Normalized              | 0.950337395         | 0.903141165             | 5.958648715         | 0.016055945         |
+
+
+####  R² & MSE For Each Model
+<img src="2in1.png" >
+
+
+#### Final Table
+| Country           | Predicted Medals | Total Medals |
+|-------------------|------------------|--------------|
+| United States      | 115              | 113          |
+| China             | 76               | 88           |
+| Japan             | 64               | 58           |
+| United Kingdom    | 43               | 65           |
+| Russia            | 48               | 71           |
+| Australia         | 37               | 46           |
+| Netherlands       | 21               | 36           |
+| France            | 39               | 33           |
+| Germany           | 46               | 37           |
+| Italy             | 34               | 40           |
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
